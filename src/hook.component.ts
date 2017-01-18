@@ -17,8 +17,8 @@ export function createAction<T extends Action>(stack: Array<any>): T {
         // return new promise of result
         return new Promise<any>((resolve: Function, reject: Function) => {
 
-            // go for all the actors in stack
-            applyEach(f.stack, args, (err: Error, result: Array<any>) => {
+            // add the next parameter
+            args.push((err: Error, result: Array<any>) => {
 
                 // if error is made
                 if (err) {
@@ -28,6 +28,10 @@ export function createAction<T extends Action>(stack: Array<any>): T {
                 // return the result
                 resolve(result);
             });
+
+            args.unshift(f.stack);
+
+            applyEach.apply(undefined, args);
         });
     };
 
@@ -64,10 +68,10 @@ export function createFilter<M, C>(stack: Array<any>): Filter {
 
                     // return the actual results
                     resolve(results);
-                }else {
+                } else {
 
                     // return a single result
-                    resolve(results[0]);   
+                    resolve(results[0]);
                 }
             });
         });
