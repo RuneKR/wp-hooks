@@ -59,8 +59,16 @@ export function createFilter<M, C>(stack: Array<any>): Filter<M, C> {
                     return reject(err);
                 }
 
-                // return the actual result as the last elemnt of the array
-                resolve(results[results.length - 1]);
+                // check if there is multiple results
+                if (results.length !== 1) {
+
+                    // return the actual results
+                    resolve(results);
+                }else {
+
+                    // return a single result
+                    resolve(results[0]);   
+                }
             });
         });
     };
