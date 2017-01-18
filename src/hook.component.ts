@@ -41,7 +41,7 @@ export function createAction<T extends Action>(stack: Array<any>): T {
 /**
  * Create hookable filter // løs problemet med meta for results
  */
-export function createFilter<M, C>(stack: Array<any>): Filter<M, C> {
+export function createFilter<M, C>(stack: Array<any>): Filter {
 
     'use strict';
 

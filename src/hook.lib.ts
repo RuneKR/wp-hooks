@@ -1,16 +1,18 @@
 import * as Promise from 'bluebird';
 
+// these are all examples of more or less one variable as args
+
 /**
  * Base next function in action
  */
 export interface ActionNext extends Function {
-    (err: any, ...cargo: Array<any>): void;
+    (err: any, ...args: Array<any>): void;
 }
 /**
  * Example of an action hook with only one argument a cargo
  */
-export interface ExampleActionHook extends Function {
-    (cargo: any, next: ActionNext): void;
+export interface ActionHook extends Function {
+    (args: any, next: ActionNext): void;
 }
 
 /**
@@ -24,19 +26,19 @@ export interface Action extends Function {
 /**
  * Base next function in filter
  */
-export interface FilterNext<M, C> extends Function {
-    (err: any, meta: M, cargo: C): void;
+export interface FilterNext extends Function {
+    (err: any, ...args: Array<any>): void;
 }
 /**
  * Base filter hook
  */
-export interface FilterHook<M, C> extends Function {
-    (meta: M, cargo: C, next: FilterNext<M, C>): void;
+export interface FilterHook extends Function {
+    (args: any, next: FilterNext): void;
 }
 /**
  * Base filter 
  */
-export interface Filter<M, C> extends Function {
-    (meta: M, cargo: C): void;
-    stack: Array<FilterHook<M, C>>;
+export interface Filter extends Function {
+    (...args: Array<any>): void;
+    stack: Array<FilterHook>;
 }
