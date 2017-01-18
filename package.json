@@ -1,0 +1,29 @@
+{
+  "name": "make-it-hookable",
+  "version": "1.0.0",
+  "description": "Create hookable methods in typescript with wordpress inspiration",
+  "main": "build/index.js",
+  "typings": "build/index.d.ts",
+  "dependencies": {
+    "async": "^2.1.4",
+    "bluebird": "^3.4.7"
+  },
+  "scripts": {
+    "test": "node build/hook.test",
+    "prepublish": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MedSolve/make-it-hookable.git"
+  },
+  "keywords": [
+    "NodeJS",
+    "typescript"
+  ],
+  "author": "MedSolve",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MedSolve/make-it-hookalbe/issues"
+  },
+  "homepage": "https://github.com/MedSolve/make-it-hookable#readme"
+}
