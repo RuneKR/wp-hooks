@@ -2,8 +2,6 @@ import * as Promise from 'bluebird';
 import { waterfall, applyEach, constant } from 'async';
 import { Action, Filter } from './hook.lib';
 
-// obs i corrected something in typings for applyeach just added a line that works
-
 /**
  * Create hookable action
  */
@@ -29,8 +27,10 @@ export function createAction<T extends Action>(stack: Array<any>): T {
                 resolve(result);
             });
 
+            // add stack to args for applyEach
             args.unshift(f.stack);
 
+            // do applyEach
             applyEach.apply(undefined, args);
         });
     };

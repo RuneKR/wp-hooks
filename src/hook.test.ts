@@ -1,37 +1,52 @@
 // the unit test here
 
-import { createAction, HookLib } from './';
+import { createAction, createFilter, HookLib } from './';
 
 /**
- * Example of an action hook with only one argument a cargo
+ * Interface describing the action 
  */
-export interface ExampleActionHook extends Function {
-    (cargo: number, meta: number, next: HookLib.ActionNext): void;
+export interface IAction {
+    (target: number, meta: number): HookLib.Promise<any>;
+    stack: Array<{
+        (target: number, meta: number, next: { (err: Error, res: number): void }): void;
+    }>;
 }
 
-/**
- * Base action
- */
-export interface Action extends HookLib.Action {
-    stack: Array<ExampleActionHook>;
-}
+// create action
+let action: IAction = createAction([]);
 
-let action: Action = createAction([]);
+// add a command to stack for action
+action.stack.push((cargo: number, meta: number, next: { (err: Error, res: number): void }) => {
 
-action.stack.push((cargo: number, meta: number, next: HookLib.ActionNext) => {
-
-    return next(undefined, cargo * 2 * meta);
+    return next(undefined, cargo * meta);
 });
 
-action(4, 2).then((res: any) => {
-
-    console.log(res);
-
-});
-
+// do action and get result
 action(4, 3).then((res: any) => {
 
+    // output 12
     console.log(res);
-
 });
 
+/**
+ * Interface describing the filter 
+ */
+export interface IFilter {
+    (target: number, meta: number): HookLib.Promise<any>;
+    stack: Array<{
+        (target: number, meta: number, next: { (err: Error, res: number): void }): void;
+    }>;
+}
+
+// create action
+let filter: IFilter = createFilter([(cargo: number, meta: number, next: { (err: Error, cargo: number, meta: number): void }) => {
+
+    return next(undefined, cargo * meta, meta);
+}]);
+
+// do action and get result
+filter(4, 3).then((res: any) => {
+
+    // output [12, 3]
+    console.log(res);
+});

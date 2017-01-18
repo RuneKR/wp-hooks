@@ -1,5 +1,8 @@
 import * as Promise from 'bluebird';
 
+// export promise
+export {Promise};
+
 /**
  * Next function for actions and beware of only a single output is accepted in the result
  * @param {Error | Undefined}   err     Any error made during execution  
@@ -43,7 +46,7 @@ export interface FilterNext extends Function {
  * @param {ActionNext}          next    The next function to call with the result after the current is finished
  */
 export interface FilterHook extends Function {
-    (args: any, next: FilterNext): void;
+    (args: any, ...nextAndArgs: Array<any>): void;  // FilterNext
 }
 
 /**
@@ -52,6 +55,6 @@ export interface FilterHook extends Function {
  * @returns {Promise}           Array of results are returned
  */
 export interface Filter extends Function {
-    (...args: Array<any>): void;
+    (...args: Array<any>): Promise<any>;
     stack: Array<FilterHook>;
 }

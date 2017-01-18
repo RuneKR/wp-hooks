@@ -1,6 +1,6 @@
 {
   "name": "wp-hooks",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Create hookable methods in typescript with wordpress inspiration",
   "main": "build/index.js",
   "typings": "build/index.d.ts",
